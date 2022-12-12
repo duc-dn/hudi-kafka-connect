@@ -1,0 +1,27 @@
+{
+    "name": "hudi-sink",
+    "config": {
+		"bootstrap.servers": "broker:9092",
+		"connector.class": "org.apache.hudi.connect.HoodieSinkConnector",
+		"tasks.max": "4",
+		"control.topic.name": "hudi-control-topic",
+		"key.converter": "org.apache.kafka.connect.storage.StringConverter",
+		"value.converter": "org.apache.kafka.connect.storage.StringConverter",
+		"value.converter.schemas.enable": "false",	
+		"topics": "hudi-test-topic",
+		"hoodie.table.name": "hudi-test-topic",
+		"hoodie.table.type": "COPY_ON_WRITE",
+		"hoodie.base.path": "s3a://stocks-cow",
+		"hoodie.datasource.write.recordkey.field": "volume",
+		"hoodie.datasource.write.partitionpath.field": "date",
+		"hoodie.datasource.write.keygenerator.type":"COMPLEX",
+		"hoodie.compact.inline.max.delta.commits":2,
+		"fs.s3a.fast.upload": "true",
+		"fs.s3a.access.key": "admin",
+		"fs.s3a.secret.key": "123456789",
+		"fs.s3a.endpoint": "http://minio:9000",
+		"hoodie.schemaprovider.class": "org.apache.hudi.schema.SchemaRegistryProvider",
+		"hoodie.deltastreamer.schemaprovider.registry.url": "http://schema-registry:8082/subjects/hudi-test-topic/versions/latest",
+		"hoodie.kafka.commit.interval.secs": 60
+      }
+}
